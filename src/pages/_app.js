@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 export default function App({ Component, pageProps }) {
 
-  const getLayout = Component.getLayout || ((page) => page);
+const getLayout = Component.getLayout || ((page) => page);
 
-  return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>;
+return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>;
 }
