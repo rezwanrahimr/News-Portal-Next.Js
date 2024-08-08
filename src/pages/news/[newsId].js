@@ -7,10 +7,14 @@ import {
     ProfileOutlined,
 } from "@ant-design/icons";
 import RootLayout from "@/components/Layouts/RootLayout";
+import { useGetSingleNewsQuery } from "@/redux/api/api";
 
-const NewsDetails = ({ data }) => {
-    return <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-        <div className="container-wrapper" style={{marginTop:"100px"}}>
+const NewsDetails = ({ newsId }) => {
+    const { data, isLoading, error } = useGetSingleNewsQuery(newsId)
+    if (isLoading) return <div>Loading...</div>
+    if (error) return <div>{error.message}</div>
+    return <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div className="container-wrapper" style={{ marginTop: "100px" }}>
             <Row
                 gutter={{
                     xs: 8,
@@ -87,7 +91,8 @@ NewsDetails.getLayout = function getLayout(page) {
     return <RootLayout>{page}</RootLayout>;
 };
 
-export const getStaticPaths = async () => {
+// SSG
+/* export const getStaticPaths = async () => {
     const res = await fetch(`http://localhost:5000/news`);
     const data = await res.json();
 
@@ -96,10 +101,29 @@ export const getStaticPaths = async () => {
     }))
     return { paths, fallback: false }
 }
+
 export const getStaticProps = async (context) => {
     const { newsId } = context.params;
     const res = await fetch(`http://localhost:5000/news/${newsId}`);
     const data = await res.json();
 
     return { props: { data } }
+} */
+
+
+// SSR
+/* export const getServerSideProps = async (context) => {
+    const { newsId } = context.params;
+    const res = await fetch(`http://localhost:5000/news/${newsId}`);
+    const data = await res.json();
+
+    return { props: { data } }
+} */
+
+export const getServerSideProps = async (context) => {
+    const { newsId } = context.params;
+    // const res = await fetch(`http://localhost:5000/news/${newsId}`);
+    // const data = await res.json();
+
+    return { props: { newsId } }
 }

@@ -16,7 +16,7 @@ const RootLayout = ({ children }) => {
   return (
     <Layout>
       <Header
-        style={{
+        style={{  
           display: "flex",
           justifyContent: "space-between",
         }}
